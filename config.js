@@ -2,6 +2,14 @@ const CONFIG = {
   // ── 초대장 열기 ──
   useCurtain: false,
 
+  // ── Hero 이미지 바로 아래 고정 이미지 ──
+  // images/hero/fixed.jpg 자리에 실제 파일명을 넣으면 됩니다.
+  heroFixedImage: {
+    enabled: true,
+    src: "images/hero/fixed.jpg",
+    alt: "규현과 민지 웨딩 사진"
+  },
+
   // ── 메인 (히어로) ──
   groom: {
     name: "이규현",
