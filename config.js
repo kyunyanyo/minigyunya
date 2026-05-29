@@ -2,15 +2,15 @@ const CONFIG = {
   // ── 초대장 열기 ──
   useCurtain: false,
 
-  // ── 인사말과 Love Story 사이 고정 이미지 ──
+  // ── Love Story 아래 고정 이미지 ──
   introFixedImage: {
     enabled: true,
     src: "images/hero/fixed.jpg",
     alt: "규현과 민지 웨딩 사진",
     width: "100%",
     maxWidth: "100%",
-    margin: "0 auto",
-    padding: "0 24px",
+    margin: "0",
+    padding: "0",
     radius: "0px",
     objectFit: "contain",
     objectPosition: "center center"
