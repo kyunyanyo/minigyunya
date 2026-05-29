@@ -21,6 +21,10 @@
 
   <link rel="stylesheet" href="styles.css">
 
+  <!-- Love Story 관련 이미지 선로딩: 스크롤 시 지연 없이 빠르게 현출되도록 설정 -->
+  <link rel="preload" as="image" href="images/intro/between-greeting-story.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="images/hero/fixed.jpg" fetchpriority="high">
+
   <style>
     /* Love Story 아래 고정 이미지 + 인사말/Love Story 사이 기존 이미지 */
     .intro-fixed-image {
@@ -223,7 +227,7 @@
     <section class="section between-greeting-story-image-section" id="betweenGreetingStoryImageSection" hidden>
       <div class="section__inner">
         <div class="intro-fixed-image" id="betweenGreetingStoryImageBlock">
-          <img class="intro-fixed-image__photo" id="betweenGreetingStoryImage" src="" alt="웨딩 사진" loading="lazy">
+          <img class="intro-fixed-image__photo" id="betweenGreetingStoryImage" src="" alt="웨딩 사진" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -242,7 +246,7 @@
     <section class="section intro-fixed-image-section" id="introFixedImageSection" hidden>
       <div class="section__inner">
         <div class="intro-fixed-image" id="introFixedImageBlock">
-          <img class="intro-fixed-image__photo" id="introFixedImage" src="" alt="웨딩 사진" loading="lazy">
+          <img class="intro-fixed-image__photo" id="introFixedImage" src="" alt="웨딩 사진" loading="eager" fetchpriority="high" decoding="async">
         </div>
       </div>
     </section>
@@ -332,6 +336,28 @@
 
   </main>
 
+
+
+  <script>
+    // Love Story 관련 이미지를 미리 요청해서 스크롤 시 로딩 딜레이를 줄입니다.
+    (function () {
+      var preloadTargets = [
+        'images/intro/between-greeting-story.jpg',
+        'images/intro/between-greeting-story.png',
+        'images/intro/between-greeting-story.webp',
+        'images/hero/fixed.jpg',
+        'images/hero/fixed.png',
+        'images/hero/fixed.webp'
+      ];
+
+      preloadTargets.forEach(function (src) {
+        var image = new Image();
+        image.decoding = 'async';
+        image.src = src;
+      });
+    })();
+  </script>
+
   <script src="script.js"></script>
 
   <script>
@@ -365,6 +391,9 @@
         }
 
         img.alt = fixedImage.alt || '웨딩 사진';
+        img.loading = 'eager';
+        img.decoding = 'async';
+        img.setAttribute('fetchpriority', 'high');
 
         setCssVar(block, '--intro-fixed-width', fixedImage.width || '100%');
         setCssVar(block, '--intro-fixed-max-width', fixedImage.maxWidth || '100%');
@@ -450,6 +479,9 @@
         }
 
         img.alt = fixedImage.alt || '웨딩 사진';
+        img.loading = 'eager';
+        img.decoding = 'async';
+        img.setAttribute('fetchpriority', 'high');
 
         setCssVar(block, '--intro-fixed-width', fixedImage.width || '100%');
         setCssVar(block, '--intro-fixed-max-width', fixedImage.maxWidth || '100%');
