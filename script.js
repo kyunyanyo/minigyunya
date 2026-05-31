@@ -208,23 +208,39 @@
     const g = CONFIG.groom;
     const b = CONFIG.bride;
 
-    function parentLine(father, mother, fatherDeceased, motherDeceased) {
-      const fd = fatherDeceased ? ' deceased' : '';
-      const md = motherDeceased ? ' deceased' : '';
-      return `<span class="${fd}">${father}</span> · <span class="${md}">${mother}</span>`;
+    function parentName(name, isDeceased) {
+      if (!name) return '';
+      const deceasedClass = isDeceased ? ' deceased' : '';
+      return `<span class="${deceasedClass}">${name}</span>`;
+    }
+
+    function parentNames(father, mother, fatherDeceased, motherDeceased) {
+      return [
+        parentName(father, fatherDeceased),
+        parentName(mother, motherDeceased)
+      ]
+        .filter(Boolean)
+        .join('<span class="parent-dot"> · </span>');
+    }
+
+    function parentRow(person, relation) {
+      const parents = parentNames(
+        person.father,
+        person.mother,
+        person.fatherDeceased,
+        person.motherDeceased
+      );
+
+      return `
+        <div class="parent-row">
+          ${parents}<span class="parent-relation">의 ${relation}</span> <span class="child-name">${person.name}</span>
+        </div>
+      `;
     }
 
     const parentsHTML = `
-      <div class="parent-row">
-        ${parentLine(g.father, g.mother, g.fatherDeceased, g.motherDeceased)}
-        <span class="parent-dot">·</span>
-        의 아들 <span class="child-name">${g.name}</span>
-      </div>
-      <div class="parent-row">
-        ${parentLine(b.father, b.mother, b.fatherDeceased, b.motherDeceased)}
-        <span class="parent-dot">·</span>
-        의 딸 <span class="child-name">${b.name}</span>
-      </div>
+      ${parentRow(g, '장남')}
+      ${parentRow(b, '장녀')}
     `;
 
     $('#greetingParents').innerHTML = parentsHTML;
